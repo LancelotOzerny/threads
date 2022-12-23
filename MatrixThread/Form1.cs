@@ -16,7 +16,7 @@ namespace MatrixThread
         {
             int size = rand.Next(2, 4);
 
-            Matrix newMtx1 = new Matrix(size);
+            Matrix newMtx1 = new Matrix(size, true);
             _matrixes.Add(newMtx1);
 
             PrintMatrix(newMtx1, startMatrixes);
@@ -43,11 +43,15 @@ namespace MatrixThread
 
         private void add_btn_Click(object sender, EventArgs e)
         {
-            AddMatrixes();
+            if (multiplyer.CurrentThreadCount == 0)
+            {
+                AddMatrixes();
+            }
         }
 
         private void calcButton_Click(object sender, EventArgs e)
         {
+            
             ResultValues.Items.Clear();
             multiplyer.Multiply(_matrixes, this);
         }
@@ -64,6 +68,8 @@ namespace MatrixThread
         {
             private int threadCounts = 0;
             private int maxThreadCounts;
+
+            public int CurrentThreadCount { get => threadCounts; }
 
             public int MaxThreadCount
             {
@@ -90,11 +96,20 @@ namespace MatrixThread
                         threadCounts++;
                         foreach (Matrix mtx in _matrixes)
                         {
+                            if (matrix == null)
+                            {
+                                continue;
+                            }
+
                             Matrix m1 = (Matrix)matrix;
                             if (m1.Size == mtx.Size)
                             {
                                 Matrix result = m1 * mtx;
                                 form.PrintMatrix(result, form.ResultValues);
+
+                                Matrix result2 = m1 * mtx;
+                                form.PrintMatrix(result2, form.ResultValues);
+
                                 Thread.Sleep(1000);
                             }
                         }

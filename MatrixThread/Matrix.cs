@@ -31,25 +31,30 @@ namespace MatrixThread
             }
         }
 
-        public Matrix(int _size)
+        public Matrix(int _size, bool randValues = false)
         {
             this._size = _size;
             _values = new int[this._size, this._size];
 
-            for (int i = 0; i < this.Size; i++)
+            if (randValues)
             {
-                for (int j = 0; j < this.Size; j++)
+                for (int i = 0; i < this.Size; i++)
                 {
-                    this[i, j] = rand.Next(-10, 10);
+                    for (int j = 0; j < this.Size; j++)
+                    {
+                        this[i, j] = rand.Next(-10, 10);
+                    }
                 }
             }
         }
+
         /// <summary>
         /// Умножение матрицы А на матрицу Б
         /// </summary>
         public static Matrix Multiply(Matrix a, Matrix b)
         {
             Matrix result = new Matrix(a.Size);
+
             for (int i = 0; i < a.Size; i++)
             {
                 for (int j = 0; j < b.Size; j++)
@@ -60,6 +65,7 @@ namespace MatrixThread
                     }
                 }
             }
+
             return result;
         }
 
