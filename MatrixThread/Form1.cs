@@ -65,6 +65,12 @@ namespace MatrixThread
             private int threadCounts = 0;
             private int maxThreadCounts;
 
+            public int MaxThreadCount
+            {
+                get => maxThreadCounts;
+                set => maxThreadCounts = value;
+            }
+
             public Multiplyer(int threadCounts)
             {
                 this.maxThreadCounts = threadCounts;
@@ -97,6 +103,12 @@ namespace MatrixThread
                     thread.Start(_matrixes[i]);
                 }
             }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            int value = int.Parse(textBox1.Text);
+            multiplyer.MaxThreadCount = value;
         }
     }
 }
